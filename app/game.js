@@ -13,12 +13,20 @@ module.exports = function (io, aliasGenerator) {
         console.log("Connected: " + socket.name);
 
         if (clients.length >= 2 && nowPlaying.length == 0) {
-            startBeef(io);
+            newBeef(io);
         }
 
         socket.on("disconnect", () => {
             console.log("DISCONNECTED!");
             clients.splice(clients.indexOf(socket), 1);
+            let index = nowPlaying.indexOf(socket);
+            if (index != -1) {
+                console.log("A playing player disconnected. Stopping game!");
+                let opponentIndex = index == 0 ? 1 : 0;
+                let opponent = nowPlaying[opponentIndex];
+                opponent.emit("diplomat");
+                startNewGame(io);
+            }
         });
 
         socket.on("input", (data) => {
@@ -69,10 +77,7 @@ module.exports = function (io, aliasGenerator) {
                 }
 
                 io.emit("shot", shotsConsumed);
-                clearNowPlaying();
-                setTimeout((io) => {
-                    startBeef(io);
-                }, 5000, io);
+                startNewGame(io);
             }
         });
 
@@ -81,8 +86,7 @@ module.exports = function (io, aliasGenerator) {
         });
     });
 };
-
-function startBeef(io) {
+function newBeef(io) {
     index = index + 1 >= clients.length ? 0 : index + 1;
     let player1 = clients[index];
     index = index + 1 >= clients.length ? 0 : index + 1;
@@ -105,6 +109,13 @@ function clearNowPlaying() {
     });
 
     nowPlaying = [];
+}
+
+function startNewGame(io) {
+    clearNowPlaying();
+    if (clients.length >= 2) {
+        setTimeout(newBeef, 5000, io);
+    }
 }
 
 class GameData {
