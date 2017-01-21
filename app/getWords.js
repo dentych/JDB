@@ -9,10 +9,6 @@ class WordReader {
     read() {
         return fs.readFileSync(this.filePath, 'utf8');
     }
-
-    printAllWords(){
-        console.log(this.wordArray);
-    }
 }
 
 class AliasGenerator{
@@ -35,13 +31,4 @@ class AliasGenerator{
         }
 }
 
-const nounReader = new WordReader('../appData/nounlist.txt');
-const adjReader = new WordReader('../appData/adjectiveList.txt');
 
-const gen = new AliasGenerator(nounReader.wordArray, adjReader.wordArray);
-
-const player1 = gen.generatePlayerName();
-const game1 = gen.generateRoomCode();
-
-console.log(player1);
-console.log(game1);
