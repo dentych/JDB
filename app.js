@@ -10,7 +10,7 @@ const nounReader = new aliasGen.WordReader('./appData/nounlist.txt');
 const adjReader = new aliasGen.WordReader('./appData/adjectiveList.txt');
 let generator = new aliasGen.AliasGenerator(nounReader.wordArray, adjReader.wordArray);
 
-app.use(morgan("dev"));
+// app.use(morgan("dev"));
 app.use("/static", express.static("public"));
 app.use("/css", express.static("public/css"));
 app.use("/img", express.static("public/img"));

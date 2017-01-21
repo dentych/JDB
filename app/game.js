@@ -1,14 +1,24 @@
 let clients = [];
+let connectedClients = 0;
 let nowPlaying = [];
+let index = 0;
 
 module.exports = function (io, aliasGenerator) {
     io.on("connection", (socket) => {
-        let username = aliasGenerator.generatePlayerName();
-        console.log(socket);
-        socket.emit("username", username);
+        socket.name = aliasGenerator.generatePlayerName();
+        socket.emit("username", socket.name);
+        clients.push(socket);
+        connectedClients++;
+
+        console.log("Connected: " + socket.name);
+
+        if (connectedClients >= 2 && nowPlaying.length == 0) {
+            startBeef(socket);
+        }
 
         socket.on("disconnect", () => {
             console.log("DISCONNECTED!");
+            clients.splice(clients.indexOf(socket), 1);
         });
 
         socket.on("input", (data) => {
@@ -20,7 +30,21 @@ module.exports = function (io, aliasGenerator) {
         });
 
         socket.on("join-room", (data) => {
-            
+
         });
     });
 };
+
+function startBeef(socket) {
+    let player1 = clients[index];
+    index = index + 1 >= connectedClients ? 0 : index + 1;
+    let player2 = clients[index];
+    index = index + 1 >= connectedClients ? 0 : index + 1;
+
+    nowPlaying.push({id: player1.id, name: player1.name});
+    nowPlaying.push({id: player2.id, name: player2.name});
+
+    console.log("BEEF: " + player1.name + " & " + player2.name);
+
+    socket.emit("beef", nowPlaying);
+}
