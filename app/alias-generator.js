@@ -22,9 +22,7 @@ class AliasGenerator {
     }
         generatePlayerName(){
             var randomName = this.adjectiveArray[Math.floor(Math.random() * this.adjectiveArray.length)];
-            randomName += " " + this.nounArray[Math.floor(Math.random() * this.nounArray.length)];
-            console.log(randomName);
-            return randomName;
+            return randomName += " " + this.nounArray[Math.floor(Math.random() * this.nounArray.length)];
         }
 
         generateRoomCode(){
