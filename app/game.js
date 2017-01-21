@@ -33,10 +33,10 @@ module.exports = function (io, aliasGenerator) {
                 player.answer = data;
             }
 
-            if (player.answer != null && opponent.answer != null){
+            if (player.answer != null && opponent.answer != null) {
                 console.log("Both players has answered...");
                 let shotsConsumed = [];
-                if (player.answer == "hate" && opponent.answer == "hate"){
+                if (player.answer == "hate" && opponent.answer == "hate") {
                     player.consumed += 1;
                     nowPlaying.forEach((element) => {
                         shotsConsumed.push({
@@ -46,9 +46,9 @@ module.exports = function (io, aliasGenerator) {
 
                         element.emit("result", "enemy");
                     });
-                } else if (player.answer == "love" && opponent.answer == "hate"){
+                } else if (player.answer == "love" && opponent.answer == "hate") {
                     player.consumed += 2;
-                    player.emit("result", "naive");
+                    player.emit("result", "lost");
                     opponent.emit("result", "won");
 
                     shotsConsumed.push({
@@ -57,7 +57,7 @@ module.exports = function (io, aliasGenerator) {
                     });
                 } else if (player.answer == "hate" && opponent.answer == "love") {
                     player.emit("result", "won");
-                    opponent.emit("result", "naive");
+                    opponent.emit("result", "lost");
 
                     shotsConsumed.push({
                         name: opponent.name,
@@ -70,15 +70,15 @@ module.exports = function (io, aliasGenerator) {
                 }
 
                 io.emit("shot", shotsConsumed);
+                nowPlaying = [];
+                setTimeout((io) => {
+                    startBeef(io);
+                }, 5000, io);
             }
         });
 
-        socket.on("current-data", (data) => {
-
-        });
-
         socket.on("join-room", (data) => {
-            let gamedata  = new GameData();
+            let gamedata = new GameData();
             console.log(gamedata);
             //socket.emit("current-data", new GameData() )
         });
@@ -103,7 +103,7 @@ function startBeef(io) {
 }
 
 class GameData {
-    constructor(){
+    constructor() {
         this.numOfPlayers = clients.length;
         this.players = clients.map((client) => {
             return {
