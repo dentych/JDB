@@ -112,5 +112,5 @@ $("#red").click(function () {
 
 function OnChoiceSelected() {
     HideAllViews();
-    $(".choice-registered").show("slow");
+    $(".choice-registered").show();
 }
