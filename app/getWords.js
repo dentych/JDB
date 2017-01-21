@@ -26,10 +26,10 @@ class AliasGenerator{
         }
 
         generateRoomCode(){
-            var text = "";
-            var rep = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+            let text = "";
+            const rep = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
-            for( var i = 0; i < 5; i++)
+            for( let i = 0; i < 5; i++)
                 text += rep.charAt(Math.floor(Math.random() * rep.length));
             return text;
         }
