@@ -21,7 +21,6 @@ var socket = io.connect(window.location.protocol + "//" + window.location.hostna
 
 let isInBeef = false;
 let myUsername = "no username";
-
 let users = [];
 
 socket.on("username", (data) => {
