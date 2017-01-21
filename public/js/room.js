@@ -41,7 +41,7 @@ socket.on("player-joined", (data) => {
 
     if (!isInBeef) {
         $(".game-overview").show();
-        $('#score-table tbody').append('<tr class="child"><td>data.name</td><td>0</td></tr>');
+        $('#score-table tbody').append('<tr><td>data.name</td><td>0</td></tr>');
     }
 });
 
