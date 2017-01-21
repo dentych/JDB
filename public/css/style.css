@@ -13,6 +13,8 @@ body {
 
 .card {
     margin-top: 60px;
+    padding-top: 5vw;
+    padding-bottom: 5vw;
 }
 
 .table {
@@ -52,4 +54,27 @@ body {
 
     width: 90%;
     height: 15vw;
+}
+
+.result-text{
+    font-size: 10vw;
+    text-align: center;
+    padding-top: 5vw;
+    padding-bottom: 5vw;
+}
+
+.card .result-lost {
+    background-color: red;
+}
+
+.card .result-enemy{
+    background-color: yellow;
+}
+
+.card .result-friend{
+    background-color: green;
+}
+
+.card .result-won{
+    background-color: purple;
 }
