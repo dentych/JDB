@@ -20,10 +20,15 @@ $(document).ready(function () {
 var socket = io.connect(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port);
 
 let isInBeef = false;
+let myUsername = "no username";
+
+let users = [];
 
 socket.on("username", (data) => {
     console.log("username: " + data);
     HideAllViews();
+
+    myUsername = data;
     $("#player-name")[0].innerText = data;
     $(".waiting-for-players").show();
 });
@@ -31,8 +36,9 @@ socket.on("username", (data) => {
 socket.on("player-joined", (data) => {
     console.log("player-joined: " + data);
     HideAllViews();
+    users.push({name: data.name, consumed: 0});
 
-    if(!isInBeef){
+    if (!isInBeef) {
         $(".game-overview").show();
         $("#score-table tr:last").after('<tr>data</tr><tr></tr><tr>0</tr>');
     }
@@ -41,7 +47,12 @@ socket.on("player-joined", (data) => {
 socket.on("player-leave", (data) => {
     console.log("player-leave: " + data);
 
-    if(!isInBeef){
+    let index = users.findIndex(function (element) {
+        return element.name == data;
+    });
+    users.splice(index, 1);
+
+    if (!isInBeef) {
         HideAllViews();
     }
 });
@@ -65,6 +76,13 @@ socket.on("shot", (data) => {
     console.log("shot: " + data);
     isInBeef = false;
     HideAllViews();
+
+    data.forEach(function (element) {
+        if (myUsername == element.name) {
+
+        }
+    });
+
     $(".game-overview").show();
 });
 
