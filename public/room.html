@@ -22,15 +22,67 @@
     </div>
 </div>
 <div class="container">
-    <div class="row" style="padding-top: 60px">
-        <div class="col-12">
-            <div class="card" style="padding-top:50px">
-                <div class="card-block">
-                    <span class="d-block text-center">Waiting for players...</span>
-                    <img class="img-fluid"
-                         src="img/spinner.gif"
-                         alt="loading spinner">
+    <div class="card">
+        <div class="waiting-for-players" hidden>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card-block">
+                        <span class="d-block text-center">Waiting for players...</span>
+                        <img class="img-fluid"
+                             src="img/spinner.gif"
+                             alt="loading spinner">
+                    </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="game-overview" hidden>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Players</th>
+                    <th></th>
+                    <th>Shots #</th>
+                </tr>
+                </thead>
+                <tbody >
+                <tr>
+                    <td>Limp Horse</td>
+                    <td>(you)</td>
+                    <td>3</td>
+                </tr>
+                <tr>
+                    <td>Numb Nuts</td>
+                    <td></td>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <td>Crazy Tits</td>
+                    <td>Playing</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>Dumb Fuck</td>
+                    <td>Playing</td>
+                    <td>1</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="playing">
+            <div class="opponent">
+                <div class="opponent-text">Opponent</div>
+                <div class="opponent-name">John Derp</div>
+            </div>
+
+            <div class="options">
+                <button class="btn btn-success" id="green">
+                    I like my friends
+                </button>
+                <button class="btn btn-danger" id="red">
+                    Screw the other guy
+                </button>
             </div>
         </div>
     </div>
