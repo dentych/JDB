@@ -23,32 +23,49 @@ module.exports = function (io, aliasGenerator) {
         });
 
         socket.on("input", (data) => {
-            let playerIndex = nowPlaying.indexOf(socket);
-            let player2Index = playerIndex == 0 ? 1 : 0;
+            let player = socket;
+            let opponentIndex = nowPlaying.indexOf(player) == 0 ? 1 : 0;
+            let opponent = nowPlaying[opponentIndex];
 
             if (data == "hate") {
-                nowPlaying[playerIndex].answer = data;
+                player.answer = data;
             } else if (data == "love") {
-                nowPlaying[playerIndex].answer = data;
+                player.answer = data;
             }
 
-            if (nowPlaying[playerIndex].answer != null && nowPlaying[player2Index].answer != null){
+            if (player.answer != null && opponent.answer != null){
                 console.log("Both players has answered...");
                 let shotsConsumed = [];
-                if (nowPlaying[playerIndex].answer == "hate" && nowPlaying[player2Index].answer == "hate"){
-                    socket.consumed += 1;
+                if (player.answer == "hate" && opponent.answer == "hate"){
+                    player.consumed += 1;
                     nowPlaying.forEach((element) => {
                         shotsConsumed.push({
                             name: element.name,
                             consumed: 1
                         });
+
+                        element.emit("result", "enemy");
                     });
-                }
-                else if (nowPlaying[playerIndex].answer == "love" && nowPlaying[player2Index].answer == "hate"){
-                    socket.consumed += 2;
+                } else if (player.answer == "love" && opponent.answer == "hate"){
+                    player.consumed += 2;
+                    player.emit("result", "naive");
+                    opponent.emit("result", "won");
+
                     shotsConsumed.push({
-                        name: socket.name,
+                        name: player.name,
                         consumed: 2
+                    });
+                } else if (player.answer == "hate" && opponent.answer == "love") {
+                    player.emit("result", "won");
+                    opponent.emit("result", "naive");
+
+                    shotsConsumed.push({
+                        name: opponent.name,
+                        consumed: 2
+                    });
+                } else {
+                    nowPlaying.forEach((element) => {
+                        element.emit("result", "diplomat");
                     });
                 }
 
