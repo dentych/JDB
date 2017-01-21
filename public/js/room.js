@@ -51,10 +51,6 @@ socket.on("player-leave", (data) => {
         return element.name == data;
     });
     users.splice(index, 1);
-
-    if (!isInBeef) {
-        HideAllViews();
-    }
 });
 
 socket.on("beef", (data) => {
@@ -76,16 +72,13 @@ socket.on("beef", (data) => {
 
 socket.on("shot", (data) => {
     console.log("shot: " + data);
-    isInBeef = false;
-    HideAllViews();
 
-    data.forEach(function (element) {
-        if (myUsername == element.name) {
-
-        }
+    data.forEach(function (drinkingPlayer) {
+        let index = users.findIndex(function (user) {
+            return user.name == data.name;
+        });
+        users[index].consumed += drinkingPlayer.consumed;
     });
-
-    $(".game-overview").show();
 });
 
 socket.on("current-data", (data) => {
