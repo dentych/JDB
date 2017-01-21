@@ -92,6 +92,25 @@ socket.on("current-data", (data) => {
     console.log("current-data: " + data);
 });
 
+
+socket.on("result", function(data){
+    HideAllViews();
+   switch (data){
+       case "lost":
+           $(".result-lost").show();
+           break;
+       case "enemy":
+           $(".result-enemy").show();
+           break;
+       case "diplomat":
+           $(".result-friend").show();
+           break;
+       case "won":
+           $(".result-won").show();
+           break;
+   }
+});
+
 function HideAllViews(duration = 400) {
     console.log("Hiding all views...");
     $("div.card > div").hide(duration);
