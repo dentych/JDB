@@ -1,0 +1,17 @@
+title Connect to room
+
+Client->Server: connection
+Server->Client: username
+Client->Server: join-room
+Server->All: player-joined
+
+-----
+
+title Beef
+
+Server->All: beef
+Client1->Server: input
+Client2->Server: input
+Server->Client1: result
+Server->Client2: result
+Server->All: shot

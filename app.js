@@ -32,15 +32,7 @@ app.get("/create-room", (req, res) => {
     res.json({id: generator.generateRoomCode()});
 });
 
-io.on("connection", (socket) => {
-    let username = generator.generatePlayerName();
-    console.log("CONNECTED: " + username);
-    socket.emit("username", username);
-
-    socket.on("disconnect", () => {
-        console.log("DISCONNECTED!");
-    })
-});
+require("./app/game")(io, generator);
 
 server.listen(3000, () => {
     console.log("Listening on port 3000");
