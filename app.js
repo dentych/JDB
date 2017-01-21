@@ -5,10 +5,16 @@ let app = express();
 let server = require("http").Server(app);
 let io = require("socket.io")(server);
 
+let aliasGen = require("./app/alias-generator");
+const nounReader = new aliasGen.WordReader('./appData/nounlist.txt');
+const adjReader = new aliasGen.WordReader('./appData/adjectiveList.txt');
+let generator = new aliasGen.AliasGenerator(nounReader.wordArray, adjReader.wordArray);
+
 app.use(morgan("dev"));
 app.use("/static", express.static("public"));
 app.use("/css", express.static("public/css"));
 app.use("/img", express.static("public/img"));
+app.use("/js", express.static("public/js"));
 
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public/index.html"));
@@ -18,12 +24,22 @@ app.get("/room", (req, res) => {
     res.sendFile(path.join(__dirname, "public/room.html"));
 });
 
-app.get("socket-test", (req, res) => {
+app.get("/socket-test", (req, res) => {
     res.sendFile(path.join(__dirname, "public/test-socket.html"));
 });
 
+app.get("/create-room", (req, res) => {
+    res.json({id: generator.generateRoomCode()});
+});
+
 io.on("connection", (socket) => {
-    console.log("CONNECTED!");
+    let username = generator.generatePlayerName();
+    console.log("CONNECTED: " + username);
+    socket.emit("username", username);
+
+    socket.on("disconnect", () => {
+        console.log("DISCONNECTED!");
+    })
 });
 
 server.listen(3000, () => {

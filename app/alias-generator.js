@@ -15,14 +15,16 @@ class WordReader {
     }
 }
 
-class AliasGenerator{
+class AliasGenerator {
     constructor(nouns, adjectives) {
         this.nounArray = nouns;
         this.adjectiveArray = adjectives;
     }
         generatePlayerName(){
             var randomName = this.adjectiveArray[Math.floor(Math.random() * this.adjectiveArray.length)];
-            return randomName += " " + this.nounArray[Math.floor(Math.random() * this.nounArray.length)];
+            randomName += " " + this.nounArray[Math.floor(Math.random() * this.nounArray.length)];
+            console.log(randomName);
+            return randomName;
         }
 
         generateRoomCode(){
@@ -35,13 +37,5 @@ class AliasGenerator{
         }
 }
 
-const nounReader = new WordReader('../appData/nounlist.txt');
-const adjReader = new WordReader('../appData/adjectiveList.txt');
-
-const gen = new AliasGenerator(nounReader.wordArray, adjReader.wordArray);
-
-const player1 = gen.generatePlayerName();
-const game1 = gen.generateRoomCode();
-
-console.log(player1);
-console.log(game1);
+module.exports.WordReader = WordReader;
+module.exports.AliasGenerator = AliasGenerator;
