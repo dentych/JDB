@@ -63,7 +63,9 @@ socket.on("current-data", (data) => {
 });
 
 function HideAllViews() {
+    console.log("Hiding all views...");
     $("div.card > div").hide();
+    console.log("All views hidden!")
 }
 
 $("#green").click(function () {
