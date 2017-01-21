@@ -22,12 +22,14 @@ var socket = io.connect(window.location.protocol + "//" + window.location.hostna
 let isInBeef = false;
 
 socket.on("username", (data) => {
-    console.log(data);
+    console.log("username: " + data);
+    HideAllViews();
     $("#player-name")[0].innerText = data;
+    $(".waiting-for-players").show();
 });
 
 socket.on("player-joined", (data) => {
-    console.log(data);
+    console.log("player-joined: " + data);
     HideAllViews();
 
     if(!isInBeef){
@@ -37,7 +39,7 @@ socket.on("player-joined", (data) => {
 });
 
 socket.on("player-leave", (data) => {
-    console.log(data);
+    console.log("player-leave: " + data);
 
     if(!isInBeef){
         HideAllViews();
@@ -45,7 +47,7 @@ socket.on("player-leave", (data) => {
 });
 
 socket.on("beef", (data) => {
-    console.log(data);
+    console.log("beef: " + data);
 
     data.forEach(function (element) {
         if (element.name == $("#player-name")[0].innerText) {
@@ -60,14 +62,14 @@ socket.on("beef", (data) => {
 });
 
 socket.on("shot", (data) => {
-    console.log(data);
+    console.log("shot: " + data);
     isInBeef = false;
     HideAllViews();
     $(".game-overview").show();
 });
 
 socket.on("current-data", (data) => {
-    console.log(data);
+    console.log("current-data: " + data);
 });
 
 function HideAllViews() {
@@ -77,9 +79,11 @@ function HideAllViews() {
 }
 
 $("#green").click(function () {
+    console.log("emitting love");
     socket.emit('input', "love")
 });
 
 $("#red").click(function () {
+    console.log("emitting hate");
     socket.emit('input', "hate")
 });
