@@ -1,5 +1,4 @@
 let clients = [];
-let connectedClients = 0;
 let nowPlaying = [];
 let index = -1;
 
@@ -11,6 +10,7 @@ module.exports = function (io, aliasGenerator) {
         clients.push(socket);
 
         console.log("Connected: " + socket.name);
+        io.emit("player-joined", {name: socket.name});
 
         if (clients.length >= 2 && nowPlaying.length == 0) {
             newBeef(io);
@@ -27,6 +27,7 @@ module.exports = function (io, aliasGenerator) {
                 opponent.emit("result", "diplomat");
                 startNewGame(io);
             }
+            io.emit("player-leave", socket.name);
         });
 
         socket.on("input", (data) => {
@@ -127,7 +128,7 @@ class GameData {
                 consumed: client.consumed
             }
         });
-        this.currentPlayers = nowPlaying.map((client) => {
+        this.nowPlaying = nowPlaying.map((client) => {
             return {
                 name: client.name
             }

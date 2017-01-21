@@ -36,12 +36,8 @@ socket.on("username", (data) => {
 
 socket.on("player-joined", (data) => {
     console.log("player-joined: " + data);
-    HideAllViews();
-    users.push({name: data.name, consumed: 0});
-
-    if (!isInBeef) {
-        $(".game-overview").show();
-        $('#score-table tbody').append('<tr><td>data.name</td><td>0</td></tr>');
+    if (data.name != myUsername) {
+        users.push({name: data.name, consumed: 0});
     }
 });
 
@@ -52,6 +48,11 @@ socket.on("player-leave", (data) => {
         return element.name == data;
     });
     users.splice(index, 1);
+
+    if (users.length < 2) {
+        HideAllViews();
+        $(".waiting-for-players").show();
+    }
 });
 
 socket.on("beef", (data) => {
@@ -82,9 +83,17 @@ socket.on("shot", (data) => {
 });
 
 socket.on("current-data", (data) => {
-    console.log("CURRENT-DATA!");
+    console.log("current-data: ");
     console.log(data);
-    if (data.numOfPlayers > 2) {
+
+    data.players.forEach(function (element) {
+        users.push({
+            name: element.name,
+            consumed: 0
+        });
+    });
+
+    if (users.length > 2) {
         HideAllViews();
         showOverview();
     }
