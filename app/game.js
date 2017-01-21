@@ -6,6 +6,7 @@ let index = 0;
 module.exports = function (io, aliasGenerator) {
     io.on("connection", (socket) => {
         socket.name = aliasGenerator.generatePlayerName();
+        socket.consumed = 0;
         socket.emit("username", socket.name);
         clients.push(socket);
         connectedClients++;
