@@ -42,10 +42,13 @@ function startBeef(io) {
     let player2 = clients[index];
     index = index + 1 >= connectedClients ? 0 : index + 1;
 
-    nowPlaying.push({id: player1.id, name: player1.name});
-    nowPlaying.push({id: player2.id, name: player2.name});
+    nowPlaying.push(player1);
+    nowPlaying.push(player2);
 
     console.log("BEEF: " + player1.name + " & " + player2.name);
 
-    io.emit("beef", nowPlaying);
+    io.emit("beef", [
+        {id: player1.id, name: player1.name},
+        {id: player2.id, name: player2.name}
+    ]);
 }
