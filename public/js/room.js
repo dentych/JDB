@@ -150,3 +150,8 @@ function findUserInBeef(beefData) {
 function showOverview() {
     $(".game-overview").show();
 }
+
+$("#asd").append('<table></table>');
+let table = $("#asd").children();
+table.append("<tr><td></td></tr><td></td><tr></tr>");
+//table.append("<tr><td>asdd</td></tr><tr><td>asdasdasd</td></tr>");
