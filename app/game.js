@@ -24,7 +24,7 @@ module.exports = function (io, aliasGenerator) {
                 console.log("A playing player disconnected. Stopping game!");
                 let opponentIndex = index == 0 ? 1 : 0;
                 let opponent = nowPlaying[opponentIndex];
-                opponent.emit("diplomat");
+                opponent.emit("result", "diplomat");
                 startNewGame(io);
             }
         });
