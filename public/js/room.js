@@ -41,8 +41,15 @@ socket.on("player-leave", (data) => {
 socket.on("beef", (data) => {
     console.log(data);
     HideAllViews();
-    $(".playing").show();
 
+    data.forEach(function (element) {
+        if (element.name == $("#player-name")[0].innerText) {
+            $(".playing").show();
+        }
+        else {
+            $(".opponent-name").text(element.name);
+        }
+    });
 });
 
 socket.on("shot", (data) => {
@@ -58,3 +65,11 @@ socket.on("current-data", (data) => {
 function HideAllViews() {
     $("div.card > div").hide();
 }
+
+$("#green").click(function () {
+    socket.emit('input', "love")
+})
+
+$("#red").click(function () {
+    socket.emit('input', "hate")
+})
