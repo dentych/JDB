@@ -60,6 +60,8 @@ socket.on("player-leave", (data) => {
 socket.on("beef", (data) => {
     console.log("beef: " + data);
 
+    $(".choice-registered").hide();
+
     data.forEach(function (element) {
         if (element.name == $("#player-name")[0].innerText) {
             isInBeef = true;
@@ -90,18 +92,25 @@ socket.on("current-data", (data) => {
     console.log("current-data: " + data);
 });
 
-function HideAllViews() {
+function HideAllViews(duration = 400) {
     console.log("Hiding all views...");
-    $("div.card > div").hide();
+    $("div.card > div").hide(duration);
     console.log("All views hidden!")
 }
 
 $("#green").click(function () {
     console.log("emitting love");
+    OnChoiceSelected();
     socket.emit('input', "love")
 });
 
 $("#red").click(function () {
     console.log("emitting hate");
+    OnChoiceSelected();
     socket.emit('input', "hate")
 });
+
+function OnChoiceSelected() {
+    HideAllViews();
+    $(".choice-registered").show("slow");
+}
