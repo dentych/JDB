@@ -1,15 +1,14 @@
 # DRIKKESPIL :D
 
 ## Rules of the game
-
 Two players compete.  
-Each player chooses a number.
+Each player chooses a number.  
 
-*Both choose Green:  *
+*Both choose Green:**
 Noone drinks.
 
-*Both choose Red:  *
+*Both choose Red:**
 Each drink a shot.
 
-*Choose opposite:  *
+**Choose opposite:**  
 The one who chose 1 has to drink both shots.
