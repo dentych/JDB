@@ -61,7 +61,9 @@ module.exports = function (io, aliasGenerator) {
         });
 
         socket.on("join-room", (data) => {
-
+            let gamedata  = new GameData();
+            console.log(gamedata);
+            //socket.emit("current-data", new GameData() )
         });
     });
 };
@@ -81,4 +83,21 @@ function startBeef(io) {
         {id: player1.id, name: player1.name},
         {id: player2.id, name: player2.name}
     ]);
+}
+
+class GameData {
+    constructor(){
+        this.numOfPlayers = clients.length;
+        this.players = clients.map((client) => {
+            return {
+                name: client.name,
+                consumed: client.consumed
+            }
+        });
+        this.currentPlayers = nowPlaying.map((client) => {
+            return {
+                name: client.name
+            }
+        });
+    }
 }
