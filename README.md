@@ -4,11 +4,11 @@
 Two players compete.  
 Each player chooses a number.  
 
-*Both choose 1:*  
+**Both choose 1:**  
 Noone drinks.
 
-*Both choose 2:*  
+**Both choose 2:**  
 Each drink a shot.
 
-*Choose opposite:*  
+**Choose opposite:**  
 The one who chose 1 has to drink both shots.
