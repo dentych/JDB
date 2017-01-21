@@ -4,10 +4,10 @@
 Two players compete.  
 Each player chooses a number.  
 
-**Both choose 1:**  
+*Both choose Green:**
 Noone drinks.
 
-**Both choose 2:**  
+*Both choose Red:**
 Each drink a shot.
 
 **Choose opposite:**  
