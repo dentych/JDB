@@ -68,8 +68,8 @@ function HideAllViews() {
 
 $("#green").click(function () {
     socket.emit('input', "love")
-})
+});
 
 $("#red").click(function () {
     socket.emit('input', "hate")
-})
+});
