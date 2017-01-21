@@ -19,31 +19,38 @@ $(document).ready(function () {
 
 var socket = io.connect(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port);
 
+let isInBeef = false;
+
 socket.on("username", (data) => {
     console.log(data);
     $("#player-name")[0].innerText = data;
-    HideAllViews();
-    $(".waiting-for-players").show();
 });
 
 socket.on("player-joined", (data) => {
     console.log(data);
     HideAllViews();
-    $(".game-overview").show();
-    $("#score-table tr:last").after('<tr>data</tr><tr></tr><tr>0</tr>');
+
+    if(!isInBeef){
+        $(".game-overview").show();
+        $("#score-table tr:last").after('<tr>data</tr><tr></tr><tr>0</tr>');
+    }
 });
 
 socket.on("player-leave", (data) => {
     console.log(data);
-    HideAllViews();
+
+    if(!isInBeef){
+        HideAllViews();
+    }
 });
 
 socket.on("beef", (data) => {
     console.log(data);
-    HideAllViews();
 
     data.forEach(function (element) {
         if (element.name == $("#player-name")[0].innerText) {
+            isInBeef = true;
+            HideAllViews();
             $(".playing").show();
         }
         else {
@@ -54,6 +61,7 @@ socket.on("beef", (data) => {
 
 socket.on("shot", (data) => {
     console.log(data);
+    isInBeef = false;
     HideAllViews();
     $(".game-overview").show();
 });
