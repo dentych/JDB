@@ -30,6 +30,8 @@ socket.on("username", (data) => {
     myUsername = data;
     $("#player-name")[0].innerText = data;
     $(".waiting-for-players").show();
+
+    socket.emit("join-room");
 });
 
 socket.on("player-joined", (data) => {
@@ -80,7 +82,12 @@ socket.on("shot", (data) => {
 });
 
 socket.on("current-data", (data) => {
-    console.log("current-data: " + data);
+    console.log("CURRENT-DATA!");
+    console.log(data);
+    if (data.numOfPlayers > 2) {
+        HideAllViews();
+        showOverview();
+    }
 });
 
 
