@@ -55,18 +55,17 @@ socket.on("player-leave", (data) => {
 socket.on("beef", (data) => {
     console.log("beef: " + data);
 
-    $(".choice-registered").hide();
+    HideAllViews();
 
-    data.forEach(function (element) {
-        if (element.name == $("#player-name")[0].innerText) {
-            isInBeef = true;
-            HideAllViews();
-            $(".playing").show();
-        }
-        else {
-            $(".opponent-name").text(element.name);
-        }
-    });
+    let userIndex = findUserInBeef(data);
+    let opponentIndex = userIndex == 0 ? 1 : 0;
+
+    if (userIndex >= 0) {
+        $(".opponent-name").text(data[opponentIndex].name);
+        $(".playing").show();
+    } else {
+        showOverview();
+    }
 });
 
 socket.on("shot", (data) => {
@@ -124,4 +123,14 @@ $("#red").click(function () {
 function OnChoiceSelected() {
     HideAllViews();
     $(".choice-registered").show();
+}
+
+function findUserInBeef(beefData) {
+    return beefData.findIndex(function (beefUser) {
+        return beefUser.name == $("#player-name")[0].innerText;
+    });
+}
+
+function showOverview() {
+    $(".game-overview").show();
 }
