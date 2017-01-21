@@ -13,7 +13,7 @@ module.exports = function (io, aliasGenerator) {
         console.log("Connected: " + socket.name);
 
         if (connectedClients >= 2 && nowPlaying.length == 0) {
-            startBeef(socket);
+            startBeef(io);
         }
 
         socket.on("disconnect", () => {
@@ -35,7 +35,7 @@ module.exports = function (io, aliasGenerator) {
     });
 };
 
-function startBeef(socket) {
+function startBeef(io) {
     let player1 = clients[index];
     index = index + 1 >= connectedClients ? 0 : index + 1;
     let player2 = clients[index];
@@ -46,5 +46,5 @@ function startBeef(socket) {
 
     console.log("BEEF: " + player1.name + " & " + player2.name);
 
-    socket.emit("beef", nowPlaying);
+    io.emit("beef", nowPlaying);
 }
