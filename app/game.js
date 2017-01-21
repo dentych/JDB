@@ -9,6 +9,18 @@ module.exports = function (io, aliasGenerator) {
 
         socket.on("disconnect", () => {
             console.log("DISCONNECTED!");
-        })
+        });
+
+        socket.on("input", (data) => {
+
+        });
+
+        socket.on("current-data", (data) => {
+
+        });
+
+        socket.on("join-room", (data) => {
+            
+        });
     });
 };
