@@ -78,9 +78,7 @@ module.exports = function (io, aliasGenerator) {
         });
 
         socket.on("join-room", (data) => {
-            let gamedata = new GameData();
-            console.log(gamedata);
-            //socket.emit("current-data", new GameData() )
+            socket.emit("current-data", new GameData());
         });
     });
 };
