@@ -19,9 +19,9 @@ $(document).ready(function () {
 
 var socket = io.connect(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port);
 
-let isInBeef = false;
 let myUsername = "no username";
 let users = [];
+let currentBeef = [];
 
 socket.on("username", (data) => {
     console.log("username: " + data);
@@ -44,8 +44,8 @@ socket.on("player-joined", (data) => {
 socket.on("player-leave", (data) => {
     console.log("player-leave: " + data);
 
-    let index = users.findIndex(function (element) {
-        return element.name == data;
+    let index = users.findIndex(function (user) {
+        return user.name == data;
     });
     users.splice(index, 1);
 
@@ -59,6 +59,8 @@ socket.on("beef", (data) => {
     console.log("beef: " + data);
 
     HideAllViews();
+
+    currentBeef = data;
 
     let userIndex = findUserInBeef(data);
     let opponentIndex = userIndex == 0 ? 1 : 0;
@@ -76,7 +78,7 @@ socket.on("shot", (data) => {
 
     data.forEach(function (drinkingPlayer) {
         let index = users.findIndex(function (user) {
-            return user.name == data.name;
+            return user.name == drinkingPlayer.name;
         });
         users[index].consumed += drinkingPlayer.consumed;
     });
@@ -89,9 +91,11 @@ socket.on("current-data", (data) => {
     data.players.forEach(function (element) {
         users.push({
             name: element.name,
-            consumed: 0
+            consumed: element.consumed
         });
     });
+
+    currentBeef = data.nowPlaying;
 
     if (users.length > 2) {
         HideAllViews();
@@ -148,5 +152,24 @@ function findUserInBeef(beefData) {
 }
 
 function showOverview() {
+    var tbody = $("#score-table tbody");
+    tbody.empty();
+    users.forEach((user) => {
+        var metadata = "";
+        if (user.name == myUsername) {
+            metadata = "(you)";
+        } else if (isPlaying(user)) {
+            metadata = "Playing";
+        }
+        tbody.append("<tr><td>" + user.name + "</td><td>" + metadata + "</td><td>" + user.consumed + "</td></tr>")
+    });
     $(".game-overview").show();
+}
+
+function isPlaying(user) {
+    var index = currentBeef.findIndex(function (element) {
+        return element.name == user.name;
+    });
+
+    return index >= 0;
 }

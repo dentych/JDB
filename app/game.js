@@ -93,6 +93,10 @@ function newBeef(io) {
     index = index + 1 >= clients.length ? 0 : index + 1;
     let player2 = clients[index];
 
+    if (!player1 || !player2) {
+        return false;
+    }
+
     nowPlaying.push(player1);
     nowPlaying.push(player2);
 
