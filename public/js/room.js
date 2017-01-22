@@ -19,7 +19,7 @@ $(document).ready(function () {
     $(".waiting-for-players").show();
 });
 
-var socket = io.connect(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port);
+var socket = io.connect(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port, {reconnection: false});
 
 let myUsername = "no username";
 let users = [];
