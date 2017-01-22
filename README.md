@@ -1,14 +1,10 @@
 # DRIKKESPIL :D
 
 ## Rules of the game
-Two players compete.  
-Each player chooses a number.  
+Two players compete.
 
-*Both choose Green:**
-Noone drinks.
+There are three ending scenarios:
 
-*Both choose Red:**
-Each drink a shot.
-
-**Choose opposite:**  
-The one who chose 1 has to drink both shots.
+1. **Both choose green:** Noone drinks.
+2. **Both choose red:** Each drink a shot.
+3. **Choose opposite:** The one who chose 1 has to drink both shots.
