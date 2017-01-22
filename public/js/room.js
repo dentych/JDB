@@ -15,6 +15,8 @@ var getUrlParameter = function getUrlParameter(sParam) {
 
 $(document).ready(function () {
     $("#session-name")[0].innerText = getUrlParameter("id");
+
+    $(".waiting-for-players").show();
 });
 
 var socket = io.connect(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port);
@@ -25,11 +27,9 @@ let currentBeef = [];
 
 socket.on("username", (data) => {
     console.log("username: " + data);
-    HideAllViews();
 
     myUsername = data;
     $("#player-name")[0].innerText = data;
-    $(".waiting-for-players").show();
 
     socket.emit("join-room");
 });
