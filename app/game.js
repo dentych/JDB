@@ -46,6 +46,7 @@ module.exports = function (io, aliasGenerator) {
                 let shotsConsumed = [];
                 if (player.answer == "hate" && opponent.answer == "hate") {
                     player.consumed += 1;
+                    opponent.consumed += 1;
                     nowPlaying.forEach((element) => {
                         shotsConsumed.push({
                             name: element.name,
@@ -64,6 +65,7 @@ module.exports = function (io, aliasGenerator) {
                         consumed: 2
                     });
                 } else if (player.answer == "hate" && opponent.answer == "love") {
+                    opponent.consumed += 2;
                     player.emit("result", "won");
                     opponent.emit("result", "lost");
 
