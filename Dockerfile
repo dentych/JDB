@@ -6,4 +6,6 @@ ADD . /nodeapp/
 
 WORKDIR /nodeapp
 
+EXPOSE 3000
+
 CMD ["./start.sh"]
