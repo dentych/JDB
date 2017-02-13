@@ -1,5 +1,9 @@
-FROM dentych/node
+FROM node:7.5-alpine
+
+MAINTAINER dentych
 
 ADD . /nodeapp/
 
-CMD ["../start.sh"]
+WORKDIR /nodeapp
+
+CMD ["./start.sh"]
